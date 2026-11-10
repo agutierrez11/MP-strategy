@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparativa de Negocio: Quedarte vs Cambiarte · Adquirencia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --card-bg: #111827;
+      --card-inner: #1a2234;
+      --border-subtle: #2d3748;
+      --border-accent: #009ee3;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-green: #10b981;
+      --accent-green-glow: rgba(16, 185, 129, 0.2);
+      --accent-red: #f43f5e;
+      --accent-red-glow: rgba(244, 63, 94, 0.2);
+      --accent-blue: #0284c7;
+      --accent-sky: #38bdf8;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* Top Bar & Title */
+    .header-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 26px;
+    }
+
+    .header-titles h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-live {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .header-titles p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-preset {
+      background: var(--card-inner);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-preset:hover {
+      border-color: var(--accent-sky);
+      background: rgba(2, 132, 199, 0.15);
+    }
+
+    .btn-preset.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-sky);
+      color: #fff;
+    }
+
+    /* KPI Highlights: The Decision in Numbers */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--border-subtle);
+    }
+
+    .kpi-card.highlight::before {
+      background: linear-gradient(90deg, #10b981, #0284c7);
+    }
+
+    .kpi-card.warning::before {
+      background: var(--accent-red);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+
+    .kpi-value.green {
+      color: #10b981;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .kpi-value.red {
+      color: #fb7185;
+    }
+
+    .kpi-value.blue {
+      color: #38bdf8;
+    }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* 2 Columns Layout */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Mix Bar */
+    .mix-bar {
+      height: 10px;
+      border-radius: 5px;
+      display: flex;
+      overflow: hidden;
+      background: #232d3f;
+      margin: 8px 0;
+    }
+
+    .mix-slice {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .slice-deb { background: #3b82f6; }
+    .slice-cre { background: #10b981; }
+    .slice-int { background: #f59e0b; }
+    .slice-amx { background: #ec4899; }
+
+    .mix-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper span.unit {
+      position: absolute;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .input-wrapper span.prefix {
+      position: absolute;
+      left: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      background: var(--card-inner);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 9px 28px 9px 12px;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input.has-prefix {
+      padding-left: 28px;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+      border-color: var(--accent-sky);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+    }
+
+    input.input-prop:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px var(--accent-green-glow);
+    }
+
+    input.input-comp:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 3px var(--accent-red-glow);
+    }
+
+    .col-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .col-header.prop {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .col-header.comp {
+      background: rgba(244, 63, 94, 0.1);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.25);
+    }
+
+    /* Comparison Table */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table.rate-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    table.rate-table th {
+      text-align: left;
+      padding: 10px 12px;
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.rate-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--font-mono);
+    }
+
+    /* Chart Containers */
+    .chart-container {
+      background: var(--card-inner);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 18px;
+      position: relative;
+    }
+
+    svg.interactive-chart {
+      width: 100%;
+      height: 280px;
+      display: block;
+      overflow: visible;
+    }
+
+    /* MSI Matrix Section */
+    .msi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .msi-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .msi-card:hover {
+      border-color: var(--accent-sky);
+    }
+
+    .msi-term {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .msi-input-box {
+      margin-bottom: 6px;
+      text-align: left;
+    }
+
+    .msi-input-box label {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .msi-input-box input {
+      font-size: 12px;
+      padding: 4px 6px;
+    }
+
+    .msi-diff-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 4px;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
+    .diff-win {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .diff-loss {
+      background: rgba(244, 63, 94, 0.2);
+      color: #fb7185;
+    }
+
+    /* Pitch & Export Box */
+    .pitch-box {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.1), rgba(16, 185, 129, 0.1));
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 26px;
+    }
+
+    .pitch-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .pitch-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pitch-text {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #e2e8f0;
+      white-space: pre-line;
+      line-height: 1.6;
+    }
+
+    .btn-action {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="header-titles">
+        <h1>
+          Comparativa de Negocio: Quedarte vs Cambiarte
+          <span class="badge-live">Data en Vivo · Campos Abiertos</span>
+        </h1>
+        <p>Decisión financiera transparente y en tiempo real con los números auditados del estado de cuenta del cliente.</p>
+      </div>
+
+      <div class="header-actions">
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Cargar Perfil:</span>
+        <button class="btn-preset active" onclick="loadPreset('turismo')">Turismo Q. Roo</button>
+        <button class="btn-preset" onclick="loadPreset('retail')">Comercio / Retail</button>
+        <button class="btn-preset" onclick="loadPreset('servicios')">Médico / High-Ticket</button>
+        <button class="btn-preset" onclick="loadPreset('empty')">En Blanco</button>
+      </div>
+    </div>
+
+    <!-- Top KPI Grid: The Business Decision -->
+    <div class="kpi-grid">
+      <div class="kpi-card highlight">
+        <div class="kpi-label">Dinero que se queda en tu negocio / Mes</div>
+        <div class="kpi-value green" id="kpi-monthly-savings">$4,850 MXN</div>
+        <div class="kpi-desc" id="kpi-monthly-sub">Menor pago en comisiones + rentas eliminadas</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Diferencial Neto a 12 Meses</div>
+        <div class="kpi-value blue" id="kpi-annual-savings">$58,200 MXN</div>
+        <div class="kpi-desc">Utilidad neta que entra directo a tu caja en el año</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Tasa Efectiva Real Todo Incluido</div>
+        <div class="kpi-value" style="font-size: 24px;">
+          <span style="color: #34d399;" id="kpi-eff-prop">2.42%</span> vs <span style="color: #fb7185;" id="kpi-eff-comp">3.15%</span>
+        </div>
+        <div class="kpi-desc" id="kpi-eff-diff">Diferencial de 0.73% sobre cada venta</div>
+      </div>
+
+      <div class="kpi-card warning">
+        <div class="kpi-label">Costo por NO Cambiarte al Año</div>
+        <div class="kpi-value red" id="kpi-cost-stay">$58,200 MXN</div>
+        <div class="kpi-desc">Fuga evitable que se queda el proveedor actual</div>
+      </div>
+    </div>
+
+    <!-- Main Comparison Section -->
+    <div class="grid-2col">
+      
+      <!-- Left Column: Business Volume & Mix -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">1. Volumen & Transaccionalidad Real</div>
+            <div class="card-subtitle">Datos tomados directamente del Estado de Cuenta del comercio</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Facturación Mensual con Tarjeta (TPV)</span>
+            <span style="color: #38bdf8;" id="txt-tpv-val">$350,000 MXN</span>
+          </div>
+          <div class="input-wrapper">
+            <span class="prefix">$</span>
+            <input type="number" id="inp-tpv" class="has-prefix" value="350000" step="10000" oninput="calculateAll()">
+            <span class="unit">MXN</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Ticket Promedio</span>
+            <span style="color: #38bdf8;" id="txt-ticket-val">$850 MXN</span>
+          </div>
+          <div class="input-wrapper">
+            <span class="prefix">$</span>
+            <input type="number" id="inp-ticket" class="has-prefix" value="850" step="50" oninput="calculateAll()">
+            <span class="unit">MXN</span>
+          </div>
+        </div>
+
+        <!-- Mix de Ventas -->
+        <div style="margin-top: 20px;">
+          <div class="form-label">
+            <span>Mix de Facturación por Tipo de Tarjeta</span>
+            <span id="mix-total-badge" style="font-family: var(--font-mono); font-size: 11px; color: #10b981;">Total: 100%</span>
+          </div>
+
+          <div class="mix-bar">
+            <div id="bar-deb" class="mix-slice slice-deb" style="width: 40%;"></div>
+            <div id="bar-cre" class="mix-slice slice-cre" style="width: 25%;"></div>
+            <div id="bar-int" class="mix-slice slice-int" style="width: 25%;"></div>
+            <div id="bar-amx" class="mix-slice slice-amx" style="width: 10%;"></div>
+          </div>
+
+          <div class="mix-legend">
+            <div class="legend-item"><div class="legend-dot" style="background: #3b82f6;"></div>Débito Nal</div>
+            <div class="legend-item"><div class="legend-dot" style="background: #10b981;"></div>Crédito Nal</div>
+            <div class="legend-item"><div class="legend-dot" style="background: #f59e0b;"></div>Internacional</div>
+            <div class="legend-item"><div class="legend-dot" style="background: #ec4899;"></div>Amex</div>
+          </div>
+
+          <div class="input-row" style="margin-top: 14px;">
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">% Débito</label>
+              <div class="input-wrapper">
+                <input type="number" id="mix-deb" value="40" min="0" max="100" oninput="adjustMix('deb')">
+                <span class="unit">%</span>
+              </div>
+            </div>
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">% Crédito</label>
+              <div class="input-wrapper">
+                <input type="number" id="mix-cre" value="25" min="0" max="100" oninput="adjustMix('cre')">
+                <span class="unit">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-row" style="margin-top: 10px;">
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">% Internacional (Turismo)</label>
+              <div class="input-wrapper">
+                <input type="number" id="mix-int" value="25" min="0" max="100" oninput="adjustMix('int')">
+                <span class="unit">%</span>
+              </div>
+            </div>
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">% Amex</label>
+              <div class="input-wrapper">
+                <input type="number" id="mix-amx" value="10" min="0" max="100" oninput="adjustMix('amx')">
+                <span class="unit">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminales Operativas -->
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+          <div class="card-title" style="font-size: 14px; margin-bottom: 12px;">Puntos de Cobro / Terminales</div>
+          
+          <div class="input-row">
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">Número de Terminales</label>
+              <div class="input-wrapper">
+                <input type="number" id="inp-devices" value="2" min="1" max="50" oninput="calculateAll()">
+                <span class="unit">Pzs</span>
+              </div>
+            </div>
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">Costo Hardware / Inversión Inicial</label>
+              <div class="input-wrapper">
+                <span class="prefix">$</span>
+                <input type="number" id="inp-device-cost" class="has-prefix input-prop" value="1499" oninput="calculateAll()">
+                <span class="unit">MXN</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Tasas & Fees Abiertos -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">2. Estructura de Comisiones (MDR)</div>
+            <div class="card-subtitle">Tasas abiertas y editables según la negociación</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+          <div class="col-header prop">
+            <span>Propuesta Nueva</span>
+            <span style="font-size: 11px;">(Si te cambias)</span>
+          </div>
+          <div class="col-header comp">
+            <span>Proveedor Actual</span>
+            <span style="font-size: 11px;">(Si te quedas)</span>
+          </div>
+        </div>
+
+        <!-- Débito Nacional -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>Débito Nacional (%)</span>
+            <span id="diff-deb" style="font-family: var(--font-mono); font-size: 11px; color: #10b981;">-0.60%</span>
+          </div>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <input type="number" id="rate-prop-deb" class="input-prop" value="1.90" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+            <div class="input-wrapper">
+              <input type="number" id="rate-comp-deb" class="input-comp" value="2.50" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Crédito Nacional -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>Crédito Nacional (%)</span>
+            <span id="diff-cre" style="font-family: var(--font-mono); font-size: 11px; color: #10b981;">-0.80%</span>
+          </div>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <input type="number" id="rate-prop-cre" class="input-prop" value="2.30" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+            <div class="input-wrapper">
+              <input type="number" id="rate-comp-cre" class="input-comp" value="3.10" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Internacional -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>Tarjetas Internacionales (%)</span>
+            <span id="diff-int" style="font-family: var(--font-mono); font-size: 11px; color: #10b981;">-1.10%</span>
+          </div>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <input type="number" id="rate-prop-int" class="input-prop" value="3.50" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+            <div class="input-wrapper">
+              <input type="number" id="rate-comp-int" class="input-comp" value="4.60" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- American Express -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>American Express (%)</span>
+            <span id="diff-amx" style="font-family: var(--font-mono); font-size: 11px; color: #10b981;">-0.80%</span>
+          </div>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <input type="number" id="rate-prop-amx" class="input-prop" value="3.30" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+            <div class="input-wrapper">
+              <input type="number" id="rate-comp-amx" class="input-comp" value="4.10" step="0.05" oninput="calculateAll()">
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Renta y Fees -->
+        <div class="form-group" style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+          <div class="form-label">
+            <span>Renta Mensual por Terminal ($)</span>
+            <span style="font-size: 11px; color: #10b981;">Sin renta forzosa</span>
+          </div>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <span class="prefix">$</span>
+              <input type="number" id="rent-prop" class="has-prefix input-prop" value="0" step="50" oninput="calculateAll()">
+              <span class="unit">MXN</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="prefix">$</span>
+              <input type="number" id="rent-comp" class="has-prefix input-comp" value="450" step="50" oninput="calculateAll()">
+              <span class="unit">MXN</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Fee Fijo por Transacción ($)</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Costo por ticket/slip</span>
+          </div>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <span class="prefix">$</span>
+              <input type="number" id="fee-prop" class="has-prefix input-prop" value="0" step="0.5" oninput="calculateAll()">
+              <span class="unit">MXN</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="prefix">$</span>
+              <input type="number" id="fee-comp" class="has-prefix input-comp" value="1.50" step="0.5" oninput="calculateAll()">
+              <span class="unit">MXN</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Real-Time Decision Chart -->
+    <div class="card" style="margin-bottom: 26px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">
+            3. Comparativa de Costo Acumulado: Quedarte vs Cambiarte
+          </div>
+          <div class="card-subtitle">
+            Evolución mes a mes del costo total absorbido por el negocio (Comisiones + Rentas + Hardware)
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; font-size: 12px; font-weight: 600;">
+          <div style="display: flex; align-items: center; gap: 6px; color: #34d399;">
+            <span style="display: inline-block; width: 14px; height: 3px; background: #10b981;"></span> Si te Cambias
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; color: #fb7185;">
+            <span style="display: inline-block; width: 14px; height: 3px; background: #f43f5e; border-top: 1px dashed;"></span> Si te Quedas
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <svg id="decision-chart" class="interactive-chart" viewBox="0 0 1000 280">
+          <!-- Rendered dynamically by JS -->
+        </svg>
+      </div>
+
+      <!-- Resumen Comparativo de Flujo -->
+      <div class="table-responsive" style="margin-top: 16px;">
+        <table class="rate-table">
+          <thead>
+            <tr>
+              <th>Periodo</th>
+              <th>Costo si te Quedas</th>
+              <th>Costo si te Cambias</th>
+              <th>Dinero que se queda en tu Caja</th>
+              <th>Veredicto Comercial</th>
+            </tr>
+          </thead>
+          <tbody id="timeline-body">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Módulo de Meses Sin Intereses (MSI) -->
+    <div class="card" style="margin-bottom: 26px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">4. Comparativa de Sobretasa en Ventas a Plazos (MSI)</div>
+          <div class="card-subtitle">Costo financiero exacto en cada plazo (3 a 24 meses) para no regalar margen</div>
+        </div>
+      </div>
+
+      <div class="msi-grid">
+        
+        <!-- 3 Meses -->
+        <div class="msi-card">
+          <div class="msi-term">3 Meses</div>
+          <div class="msi-input-box">
+            <label>Propuesta %</label>
+            <input type="number" id="msi-prop-3" class="input-prop" value="4.50" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-input-box">
+            <label>Actual %</label>
+            <input type="number" id="msi-comp-3" class="input-comp" value="5.20" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-diff-badge diff-win" id="msi-diff-3">-0.70%</div>
+        </div>
+
+        <!-- 6 Meses -->
+        <div class="msi-card">
+          <div class="msi-term">6 Meses</div>
+          <div class="msi-input-box">
+            <label>Propuesta %</label>
+            <input type="number" id="msi-prop-6" class="input-prop" value="7.50" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-input-box">
+            <label>Actual %</label>
+            <input type="number" id="msi-comp-6" class="input-comp" value="8.90" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-diff-badge diff-win" id="msi-diff-6">-1.40%</div>
+        </div>
+
+        <!-- 9 Meses -->
+        <div class="msi-card">
+          <div class="msi-term">9 Meses</div>
+          <div class="msi-input-box">
+            <label>Propuesta %</label>
+            <input type="number" id="msi-prop-9" class="input-prop" value="10.20" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-input-box">
+            <label>Actual %</label>
+            <input type="number" id="msi-comp-9" class="input-comp" value="11.80" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-diff-badge diff-win" id="msi-diff-9">-1.60%</div>
+        </div>
+
+        <!-- 12 Meses -->
+        <div class="msi-card">
+          <div class="msi-term">12 Meses</div>
+          <div class="msi-input-box">
+            <label>Propuesta %</label>
+            <input type="number" id="msi-prop-12" class="input-prop" value="12.80" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-input-box">
+            <label>Actual %</label>
+            <input type="number" id="msi-comp-12" class="input-comp" value="14.50" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-diff-badge diff-win" id="msi-diff-12">-1.70%</div>
+        </div>
+
+        <!-- 18 Meses -->
+        <div class="msi-card">
+          <div class="msi-term">18 Meses</div>
+          <div class="msi-input-box">
+            <label>Propuesta %</label>
+            <input type="number" id="msi-prop-18" class="input-prop" value="17.90" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-input-box">
+            <label>Actual %</label>
+            <input type="number" id="msi-comp-18" class="input-comp" value="20.00" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-diff-badge diff-win" id="msi-diff-18">-2.10%</div>
+        </div>
+
+        <!-- 24 Meses -->
+        <div class="msi-card">
+          <div class="msi-term">24 Meses</div>
+          <div class="msi-input-box">
+            <label>Propuesta %</label>
+            <input type="number" id="msi-prop-24" class="input-prop" value="22.50" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-input-box">
+            <label>Actual %</label>
+            <input type="number" id="msi-comp-24" class="input-comp" value="25.00" step="0.1" oninput="calculateMSI()">
+          </div>
+          <div class="msi-diff-badge diff-win" id="msi-diff-24">-2.50%</div>
+        </div>
+
+      </div>
+
+      <!-- MSI Cost Per Ticket Simulation -->
+      <div style="margin-top: 18px; padding: 14px; background: var(--card-inner); border-radius: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+        <div style="font-size: 13px;">
+          <span style="color: var(--text-muted);">En una venta a plazos de </span>
+          <strong id="msi-sample-ticket">$5,000 MXN</strong>
+          <span style="color: var(--text-muted);"> a 12 meses:</span>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 14px;">
+          Costo si te Cambias: <strong style="color: #34d399;" id="msi-cost-prop">$640</strong> | 
+          Costo si te Quedas: <strong style="color: #fb7185;" id="msi-cost-comp">$725</strong> | 
+          <span style="color: #10b981; font-weight: 700;" id="msi-ticket-savings">Ahorras $85 MXN por ticket</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pitch Cierre WhatsApp -->
+    <div class="pitch-box">
+      <div class="pitch-header">
+        <div class="pitch-title">
+          <span>💬</span> Resumen Ejecutivo para el Cliente (Listo para Enviar)
+        </div>
+        <button class="btn-action" onclick="copyPitch()">
+          <span id="copy-icon">📋</span> <span id="copy-btn-text">Copiar al Portapapeles</span>
+        </button>
+      </div>
+
+      <div class="pitch-text" id="pitch-output">
+        Generando resumen de decisión...
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const PRESETS = {
+      turismo: {
+        tpv: 350000,
+        ticket: 850,
+        mix: { deb: 40, cre: 25, int: 25, amx: 10 },
+        devices: 2,
+        deviceCost: 1499,
+        prop: { deb: 1.90, cre: 2.30, int: 3.50, amx: 3.30, rent: 0, fee: 0 },
+        comp: { deb: 2.50, cre: 3.10, int: 4.60, amx: 4.10, rent: 450, fee: 1.50 },
+        msiProp: { 3: 4.5, 6: 7.5, 9: 10.2, 12: 12.8, 18: 17.9, 24: 22.5 },
+        msiComp: { 3: 5.2, 6: 8.9, 9: 11.8, 12: 14.5, 18: 20.0, 24: 25.0 }
+      },
+      retail: {
+        tpv: 180000,
+        ticket: 320,
+        mix: { deb: 65, cre: 25, int: 5, amx: 5 },
+        devices: 1,
+        deviceCost: 1499,
+        prop: { deb: 1.85, cre: 2.25, int: 3.50, amx: 3.30, rent: 0, fee: 0 },
+        comp: { deb: 2.40, cre: 2.95, int: 4.20, amx: 3.90, rent: 390, fee: 1.20 },
+        msiProp: { 3: 4.5, 6: 7.5, 9: 10.2, 12: 12.8, 18: 17.9, 24: 22.5 },
+        msiComp: { 3: 5.0, 6: 8.5, 9: 11.5, 12: 14.0, 18: 19.5, 24: 24.5 }
+      },
+      servicios: {
+        tpv: 520000,
+        ticket: 2800,
+        mix: { deb: 25, cre: 50, int: 15, amx: 10 },
+        devices: 2,
+        deviceCost: 1499,
+        prop: { deb: 1.80, cre: 2.20, int: 3.40, amx: 3.20, rent: 0, fee: 0 },
+        comp: { deb: 2.45, cre: 3.20, int: 4.50, amx: 4.20, rent: 550, fee: 2.00 },
+        msiProp: { 3: 4.3, 6: 7.2, 9: 9.9, 12: 12.4, 18: 17.5, 24: 22.0 },
+        msiComp: { 3: 5.5, 6: 9.2, 9: 12.0, 12: 15.0, 18: 20.5, 24: 26.0 }
+      },
+      empty: {
+        tpv: 100000,
+        ticket: 500,
+        mix: { deb: 25, cre: 25, int: 25, amx: 25 },
+        devices: 1,
+        deviceCost: 0,
+        prop: { deb: 0, cre: 0, int: 0, amx: 0, rent: 0, fee: 0 },
+        comp: { deb: 0, cre: 0, int: 0, amx: 0, rent: 0, fee: 0 },
+        msiProp: { 3: 0, 6: 0, 9: 0, 12: 0, 18: 0, 24: 0 },
+        msiComp: { 3: 0, 6: 0, 9: 0, 12: 0, 18: 0, 24: 0 }
+      }
+    };
+
+    function loadPreset(name) {
+      document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const p = PRESETS[name];
+      document.getElementById('inp-tpv').value = p.tpv;
+      document.getElementById('inp-ticket').value = p.ticket;
+      document.getElementById('inp-devices').value = p.devices;
+      document.getElementById('inp-device-cost').value = p.deviceCost;
+
+      document.getElementById('mix-deb').value = p.mix.deb;
+      document.getElementById('mix-cre').value = p.mix.cre;
+      document.getElementById('mix-int').value = p.mix.int;
+      document.getElementById('mix-amx').value = p.mix.amx;
+
+      document.getElementById('rate-prop-deb').value = p.prop.deb;
+      document.getElementById('rate-prop-cre').value = p.prop.cre;
+      document.getElementById('rate-prop-int').value = p.prop.int;
+      document.getElementById('rate-prop-amx').value = p.prop.amx;
+      document.getElementById('rent-prop').value = p.prop.rent;
+      document.getElementById('fee-prop').value = p.prop.fee;
+
+      document.getElementById('rate-comp-deb').value = p.comp.deb;
+      document.getElementById('rate-comp-cre').value = p.comp.cre;
+      document.getElementById('rate-comp-int').value = p.comp.int;
+      document.getElementById('rate-comp-amx').value = p.comp.amx;
+      document.getElementById('rent-comp').value = p.comp.rent;
+      document.getElementById('fee-comp').value = p.comp.fee;
+
+      [3, 6, 9, 12, 18, 24].forEach(m => {
+        document.getElementById(`msi-prop-${m}`).value = p.msiProp[m];
+        document.getElementById(`msi-comp-${m}`).value = p.msiComp[m];
+      });
+
+      adjustMix();
+      calculateAll();
+    }
+
+    function adjustMix() {
+      let d = parseFloat(document.getElementById('mix-deb').value) || 0;
+      let c = parseFloat(document.getElementById('mix-cre').value) || 0;
+      let i = parseFloat(document.getElementById('mix-int').value) || 0;
+      let a = parseFloat(document.getElementById('mix-amx').value) || 0;
+
+      let sum = d + c + i + a;
+      const badge = document.getElementById('mix-total-badge');
+      if (Math.abs(sum - 100) > 0.1) {
+        badge.textContent = `Total: ${sum.toFixed(0)}% (Ajusta a 100%)`;
+        badge.style.color = '#f43f5e';
+      } else {
+        badge.textContent = `Total: 100% OK`;
+        badge.style.color = '#10b981';
+      }
+
+      document.getElementById('bar-deb').style.width = `${d}%`;
+      document.getElementById('bar-cre').style.width = `${c}%`;
+      document.getElementById('bar-int').style.width = `${i}%`;
+      document.getElementById('bar-amx').style.width = `${a}%`;
+
+      calculateAll();
+    }
+
+    function calculateMSI() {
+      const ticketMsi = 5000;
+      [3, 6, 9, 12, 18, 24].forEach(m => {
+        let p = parseFloat(document.getElementById(`msi-prop-${m}`).value) || 0;
+        let c = parseFloat(document.getElementById(`msi-comp-${m}`).value) || 0;
+        let diff = p - c;
+        let badge = document.getElementById(`msi-diff-${m}`);
+        if (diff <= 0) {
+          badge.className = 'msi-diff-badge diff-win';
+          badge.textContent = `${diff.toFixed(2)}%`;
+        } else {
+          badge.className = 'msi-diff-badge diff-loss';
+          badge.textContent = `+${diff.toFixed(2)}%`;
+        }
+      });
+
+      let p12 = parseFloat(document.getElementById('msi-prop-12').value) || 0;
+      let c12 = parseFloat(document.getElementById('msi-comp-12').value) || 0;
+      let costP = ticketMsi * (p12 / 100);
+      let costC = ticketMsi * (c12 / 100);
+      let sav = costC - costP;
+
+      document.getElementById('msi-cost-prop').textContent = `$${costP.toFixed(0)} MXN`;
+      document.getElementById('msi-cost-comp').textContent = `$${costC.toFixed(0)} MXN`;
+      document.getElementById('msi-ticket-savings').textContent = sav >= 0 ? `Ahorras $${sav.toFixed(0)} MXN por venta` : `Diferencial: +$${Math.abs(sav).toFixed(0)} MXN`;
+    }
+
+    function calculateAll() {
+      const tpv = parseFloat(document.getElementById('inp-tpv').value) || 0;
+      const ticket = parseFloat(document.getElementById('inp-ticket').value) || 1;
+      const numTickets = tpv / ticket;
+
+      document.getElementById('txt-tpv-val').textContent = `$${tpv.toLocaleString('es-MX')} MXN`;
+      document.getElementById('txt-ticket-val').textContent = `$${ticket.toLocaleString('es-MX')} MXN`;
+
+      const mixDeb = (parseFloat(document.getElementById('mix-deb').value) || 0) / 100;
+      const mixCre = (parseFloat(document.getElementById('mix-cre').value) || 0) / 100;
+      const mixInt = (parseFloat(document.getElementById('mix-int').value) || 0) / 100;
+      const mixAmx = (parseFloat(document.getElementById('mix-amx').value) || 0) / 100;
+
+      const devices = parseFloat(document.getElementById('inp-devices').value) || 1;
+      const deviceCostUnit = parseFloat(document.getElementById('inp-device-cost').value) || 0;
+      const initialHardwareCost = devices * deviceCostUnit;
+
+      // Rates Propuesta
+      const pDeb = (parseFloat(document.getElementById('rate-prop-deb').value) || 0) / 100;
+      const pCre = (parseFloat(document.getElementById('rate-prop-cre').value) || 0) / 100;
+      const pInt = (parseFloat(document.getElementById('rate-prop-int').value) || 0) / 100;
+      const pAmx = (parseFloat(document.getElementById('rate-prop-amx').value) || 0) / 100;
+      const pRent = (parseFloat(document.getElementById('rent-prop').value) || 0) * devices;
+      const pFee = (parseFloat(document.getElementById('fee-prop').value) || 0) * numTickets;
+
+      // Rates Proveedor Actual
+      const cDeb = (parseFloat(document.getElementById('rate-comp-deb').value) || 0) / 100;
+      const cCre = (parseFloat(document.getElementById('rate-comp-cre').value) || 0) / 100;
+      const cInt = (parseFloat(document.getElementById('rate-comp-int').value) || 0) / 100;
+      const cAmx = (parseFloat(document.getElementById('rate-comp-amx').value) || 0) / 100;
+      const cRent = (parseFloat(document.getElementById('rent-comp').value) || 0) * devices;
+      const cFee = (parseFloat(document.getElementById('fee-comp').value) || 0) * numTickets;
+
+      updateDiffBadge('diff-deb', pDeb, cDeb);
+      updateDiffBadge('diff-cre', pCre, cCre);
+      updateDiffBadge('diff-int', pInt, cInt);
+      updateDiffBadge('diff-amx', pAmx, cAmx);
+
+      // MDR Ponderado
+      const effPropMDR = (mixDeb * pDeb) + (mixCre * pCre) + (mixInt * pInt) + (mixAmx * pAmx);
+      const effCompMDR = (mixDeb * cDeb) + (mixCre * cCre) + (mixInt * cInt) + (mixAmx * cAmx);
+
+      const monthlyPropMDR = tpv * effPropMDR;
+      const monthlyCompMDR = tpv * effCompMDR;
+
+      const monthlyTotalProp = monthlyPropMDR + pRent + pFee;
+      const monthlyTotalComp = monthlyCompMDR + cRent + cFee;
+
+      const monthlyNetSavings = monthlyTotalComp - monthlyTotalProp;
+
+      const effPropTotal = tpv > 0 ? (monthlyTotalProp / tpv) * 100 : 0;
+      const effCompTotal = tpv > 0 ? (monthlyTotalComp / tpv) * 100 : 0;
+
+      // Annual impact (considering initial hardware in year 1)
+      const annualNetSavings = (monthlyNetSavings * 12) - initialHardwareCost;
+      const annualLossIfStay = monthlyNetSavings * 12;
+
+      // Update KPI Cards
+      document.getElementById('kpi-monthly-savings').textContent = `$${Math.round(monthlyNetSavings).toLocaleString('es-MX')} MXN`;
+      document.getElementById('kpi-monthly-sub').textContent = monthlyNetSavings >= 0 ? 'Menor costo en comisiones + rentas eliminadas' : 'La propuesta resulta más alta en este mix';
+
+      document.getElementById('kpi-annual-savings').textContent = `$${Math.round(annualNetSavings).toLocaleString('es-MX')} MXN`;
+      document.getElementById('kpi-cost-stay').textContent = `$${Math.round(annualLossIfStay).toLocaleString('es-MX')} MXN`;
+
+      document.getElementById('kpi-eff-prop').textContent = `${effPropTotal.toFixed(2)}%`;
+      document.getElementById('kpi-eff-comp').textContent = `${effCompTotal.toFixed(2)}%`;
+      const diffEff = effCompTotal - effPropTotal;
+      document.getElementById('kpi-eff-diff').textContent = diffEff >= 0 
+        ? `Diferencial de ${diffEff.toFixed(2)}% a favor de tu caja`
+        : `Diferencial de +${Math.abs(diffEff).toFixed(2)}%`;
+
+      renderDecisionChart(initialHardwareCost, monthlyTotalProp, monthlyTotalComp);
+      renderTimelineTable(initialHardwareCost, monthlyTotalProp, monthlyTotalComp);
+      calculateMSI();
+      updatePitch(tpv, monthlyNetSavings, annualNetSavings, effPropTotal, effCompTotal);
+    }
+
+    function updateDiffBadge(elemId, prop, comp) {
+      const el = document.getElementById(elemId);
+      const diff = (comp - prop) * 100;
+      if (diff >= 0) {
+        el.textContent = `-${diff.toFixed(2)}%`;
+        el.style.color = '#10b981';
+      } else {
+        el.textContent = `+${Math.abs(diff).toFixed(2)}%`;
+        el.style.color = '#f43f5e';
+      }
+    }
+
+    function renderTimelineTable(initHw, mProp, mComp) {
+      const tbody = document.getElementById('timeline-body');
+      tbody.innerHTML = '';
+
+      const milestones = [
+        { label: 'Mes 1', m: 1 },
+        { label: 'Mes 3', m: 3 },
+        { label: 'Mes 6', m: 6 },
+        { label: 'Mes 12 (Año 1)', m: 12 },
+        { label: 'Mes 24 (Año 2)', m: 24 }
+      ];
+
+      milestones.forEach(item => {
+        let costP = initHw + (mProp * item.m);
+        let costC = (mComp * item.m);
+        let diff = costC - costP;
+        let isWin = diff >= 0;
+
+        let tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight: 700; color: #f8fafc;">${item.label}</td>
+          <td style="color: #fb7185;">$${Math.round(costC).toLocaleString('es-MX')} MXN</td>
+          <td style="color: #34d399;">$${Math.round(costP).toLocaleString('es-MX')} MXN</td>
+          <td style="color: ${isWin ? '#10b981' : '#f43f5e'}; font-weight: 700;">
+            ${isWin ? '+' : ''}$${Math.round(diff).toLocaleString('es-MX')} MXN
+          </td>
+          <td>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: ${isWin ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.15)'}; color: ${isWin ? '#34d399' : '#fb7185'}; font-weight: 700;">
+              ${isWin ? 'NEGOCIO MÁS EFICIENTE' : 'PERIODO DE TRANSICIÓN'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderDecisionChart(initHw, mProp, mComp) {
+      const svg = document.getElementById('decision-chart');
+      const width = 1000;
+      const height = 280;
+      const padL = 70;
+      const padR = 40;
+      const padT = 30;
+      const padB = 40;
+
+      const chartW = width - padL - padR;
+      const chartH = height - padT - padB;
+
+      const months = 12;
+      const maxCost = Math.max(initHw + (mProp * months), mComp * months) * 1.1 || 1000;
+
+      const getX = (m) => padL + (m / months) * chartW;
+      const getY = (val) => padT + chartH - (val / maxCost) * chartH;
+
+      let pointsProp = [];
+      let pointsComp = [];
+      let areaPolygon = [];
+
+      for (let m = 0; m <= months; m++) {
+        let valP = initHw + (mProp * m);
+        let valC = mComp * m;
+        pointsProp.push(`${getX(m)},${getY(valP)}`);
+        pointsComp.push(`${getX(m)},${getY(valC)}`);
+      }
+
+      // Shaded profit zone between curves
+      let forwardComp = pointsComp.slice();
+      let backwardProp = pointsProp.slice().reverse();
+      areaPolygon = forwardComp.concat(backwardProp).join(' ');
+
+      let gridLines = '';
+      for (let m = 0; m <= months; m += 2) {
+        let x = getX(m);
+        gridLines += `
+          <line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + chartH}" stroke="#1e293b" stroke-width="1" />
+          <text x="${x}" y="${padT + chartH + 20}" fill="#64748b" font-size="11" font-family="JetBrains Mono" text-anchor="middle">Mes ${m}</text>
+        `;
+      }
+
+      let yTicks = '';
+      for (let step = 0; step <= 4; step++) {
+        let val = (maxCost / 4) * step;
+        let y = getY(val);
+        yTicks += `
+          <line x1="${padL}" y1="${y}" x2="${width - padR}" stroke="#1e293b" stroke-width="1" />
+          <text x="${padL - 10}" y="${y + 4}" fill="#64748b" font-size="10" font-family="JetBrains Mono" text-anchor="end">$${Math.round(val / 1000)}k</text>
+        `;
+      }
+
+      svg.innerHTML = `
+        ${gridLines}
+        ${yTicks}
+
+        <!-- Shaded Gap Area (Dinero que te ahorras) -->
+        <polygon fill="rgba(16, 185, 129, 0.08)" points="${areaPolygon}" />
+
+        <!-- Cost Lines -->
+        <polyline fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-dasharray="5 5" points="${pointsComp.join(' ')}" />
+        <polyline fill="none" stroke="#10b981" stroke-width="3" points="${pointsProp.join(' ')}" />
+
+        <!-- Label at Month 12 -->
+        <circle cx="${getX(12)}" cy="${getY(mComp * 12)}" r="5" fill="#f43f5e" />
+        <circle cx="${getX(12)}" cy="${getY(initHw + (mProp * 12))}" r="5" fill="#10b981" />
+      `;
+    }
+
+    function updatePitch(tpv, monthlySav, annualSav, effProp, effComp) {
+      const pitchBox = document.getElementById('pitch-output');
+      const ticketVal = document.getElementById('inp-ticket').value;
+      
+      const text = `Estimado/a, revisando los números reales de facturación de su negocio:
+
+📊 *AUDITORÍA DIRECTA DE ADQUIRENCIA:*
+• Facturación mensual base: $${tpv.toLocaleString('es-MX')} MXN (Ticket prom: $${ticketVal} MXN).
+• Tasa efectiva real con su proveedor actual: *${effComp.toFixed(2)}%* (sumando comisiones, rentas de equipos y costos por transacción).
+• Tasa efectiva con nuestra propuesta: *${effProp.toFixed(2)}%* todo incluido, sin rentas forzosas.
+
+💰 *EL IMPACTO DE CAMBIARTE HOY:*
+1. *Diferencial directo en tu caja:* *$${Math.round(monthlySav).toLocaleString('es-MX')} MXN mensuales* que hoy se te van en rentas y sobretasas.
+2. *Impacto a 12 meses:* *$${Math.round(annualSav).toLocaleString('es-MX')} MXN* de utilidad limpia que se quedan en tu negocio en vez de quedarse en el banco.
+3. *Operación sin ataduras:* Equipos propios, dispersión diaria y sin contratos de permanencia.
+
+El negocio no tiene que pagar más por el mismo servicio. ¿Te parece si hacemos la migración esta semana para que tu siguiente corte ya no traiga esas rentas?`;
+
+      pitchBox.textContent = text;
+    }
+
+    function copyPitch() {
+      const pitch = document.getElementById('pitch-output').textContent;
+      navigator.clipboard.writeText(pitch).then(() => {
+        document.getElementById('copy-btn-text').textContent = "¡Copiado!";
+        document.getElementById('copy-icon').textContent = "✅";
+        setTimeout(() => {
+          document.getElementById('copy-btn-text').textContent = "Copiar al Portapapeles";
+          document.getElementById('copy-icon').textContent = "📋";
+        }, 2500);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      adjustMix();
+      calculateAll();
+    });
+  </script>
+</body>
+</html>
