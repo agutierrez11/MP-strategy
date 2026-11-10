@@ -176,3 +176,46 @@ Antonio no solo vende en Quintana Roo; cuenta con un archivo nacional de más de
 3. **Ingesta DENUE / Meta Ads:**
    * Crear la pestaña `Candidatos_Staging` para recibir los nuevos registros diarios.
    * Implementar la función de deduplicación que compare el teléfono normalizado a 10 dígitos antes de insertar un nuevo comercio en `Base_Maestra`.
+
+---
+
+## 🕷️ 8. Arquitectura y Estrategia de Scraping con Apify
+
+Para que Claude en Grid entienda cómo conviven el scraping y la seguridad corporativa de Mercado Libre, esta es la arquitectura desacoplada implementada:
+
+### A. Principio de Separación de Infraestructura (Zero-Risk Compliance)
+* **La red de Mercado Libre NO realiza scraping:** Ningún servidor de MeLi, ni Grid, ni la IP de la laptop de la empresa interactúa con interfaces web de terceros.
+* **Apify como Data Provider Externo:** Todo el rastreo se ejecuta 100% en la infraestructura en la nube de **Apify** mediante actores especializados (`compass/crawler-google-places`) que utilizan proxies residenciales propios.
+* **Consumo Pasivo de Datos:** Para Grid y para el Google Sheet de Mercado Libre, Apify es simplemente un proveedor externo que entrega un archivo de datos estructurado (JSON/CSV) o lo deposita mediante API en la pestaña `Candidatos_Staging`.
+
+### B. El Pipeline de Extracción y Enriquecimiento
+1. **Lanzamiento Controlado (Cap de Costos):**
+   * Cada ejecución se limita a **140 – 600 comercios** por lote (consumo controlado de \$0.60 a \$2.40 USD por corrida).
+   * Se ejecutan búsquedas quirúrgicas cruzando las **8 verticales de oro** con las ciudades de Quintana Roo y las 15 plazas desatendidas.
+2. **Normalización de Teléfonos (WhatsApp First):**
+   * El script limpia el número telefónico para dejarlo en formato exacto de **10 dígitos** (sin prefijos internacionales confusos ni caracteres especiales), listo para detonar la conversación comercial.
+3. **Scoring y TPV Estimado:**
+   * Con base en el giro, rating (>4.5) y volumen de reseñas (>20), el pipeline clasifica al prospecto en:
+     * *Tier 1:* Facturación estimada de \$50,000 a \$250,000 MXN mensuales.
+     * *Tier 2:* Facturación estimada de \$250,000 a \$1,000,000+ MXN mensuales.
+4. **Generación Automática de Gancho (Hook) y Dolor (Pain):**
+   * Se asigna el argumento comercial preciso según la industria para que Antonio no tenga que inventar el pitch desde cero.
+
+### C. Protocolo de Ingesta hacia la Hoja de Trabajo
+```
+[Apify Cloud / Actors]
+        │
+        ▼ (JSON / CSV Limpio y Enriquecido)
+[Script Python Local / Webhook]
+        │
+        ▼ (POST directo hacia Google Sheets)
+[Pestaña "Candidatos_Staging"]
+        │
+        ▼ (Validación Anti-duplicados por Teléfono 10 dígitos)
+[Pestaña "Base_Maestra" (Asignación de ID MP-QR-XXXX)]
+        │
+        ▼ (SDK Grid.sheets)
+[Dashboard en Grid melioffice.com]
+```
+
+Con este diseño, Claude en Grid no tiene que preocuparse por bloqueos de red ni violaciones de términos, ya que su única tarea dentro de Grid es **leer y presentar la información limpia que ya reside en Google Sheets**.
